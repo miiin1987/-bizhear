@@ -1,36 +1,55 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# BizHear – 業務改善ヒアリングシート作成ツール
 
-## Getting Started
+業務の現状・課題・理想を整理して、打ち合わせに持参できるヒアリングシートを作成するWebツールです。  
+専門知識がなくても、定型の質問に回答するだけで開発者・業務改善支援者に伝わりやすい資料が完成します。
 
-First, run the development server:
+## スクリーンショット
+
+| 入力フォーム | バリデーション | 確認画面 | スマートフォン |
+|---|---|---|---|
+| ![入力フォーム](docs/screenshots/01-input-form.png) | ![バリデーション](docs/screenshots/02-validation.png) | ![確認画面](docs/screenshots/03-review.png) | ![スマートフォン](docs/screenshots/04-mobile.png) |
+
+## 機能（MVP）
+
+- **サービス説明** — 対象者・使い方・個人情報の注意を表示
+- **入力フォーム** — 業種・対象業務・現状の流れ・困りごと・理想の状態を入力（5項目）
+- **入力検証** — 必須チェック・文字数チェック・項目別エラー表示
+- **確認画面** — 入力内容を見出し付きで表示、修正のためフォームへ戻れる
+- **PDF保存** — ブラウザ印刷ダイアログから「PDFに保存」でA4縦のシートを出力
+- **レスポンシブ** — デスクトップ〜幅375pxのスマートフォンに対応
+
+## 技術スタック
+
+| 分類 | 技術 |
+|---|---|
+| フレームワーク | Next.js 16 (App Router) |
+| UI | React 19 |
+| スタイル | Tailwind CSS v4 |
+| 言語 | TypeScript 5 (strict mode) |
+| ビルド | Turbopack |
+| ホスティング | Vercel |
+
+## 起動方法
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+ブラウザで [http://localhost:3000](http://localhost:3000) を開いてください。
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build   # プロダクションビルド
+npm run lint    # ESLintチェック
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 画面構成
 
-## Learn More
+```
+/          入力フォーム（業種・対象業務・現状・課題・理想）
+└─ /review  確認画面（PDF出力 / 入力に戻る）
+```
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- 画面間の入力データは React Context でクライアント側のみに保持します。
+- `/review` をリロードまたは直接アクセスした場合は入力画面へリダイレクトします。
+- サーバーへのデータ送信・保存は一切行いません。
